@@ -22,15 +22,15 @@ module.exports = generators.Base.extend({
     for (var fileType in fileTypes) {
       this.fs.copyTpl(
         this.templatePath('my-element' + fileTypes[fileType]),
-        this.destinationPath('elements/my-' + this.elementName + fileTypes[fileType]),
+        this.destinationPath('elements/my-' + this.elementName + '/my-' + this.elementName + fileTypes[fileType]),
         { elementName: this.elementName }
       );
     }
-  },
 
-  // destination: function () {
-  //   console.log('method 1 just ran', this.templatePath());
-  //   console.log('answer', this.answer);
-  // }
+    // TODO:
+    // -Add to _elements.html
+    // -Prompt to optional <import> addition in pages
+    // -Prompt to add Composite elements: my-element/my-other-element/
+  }
 
 });
