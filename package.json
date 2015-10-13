@@ -1,0 +1,16 @@
+{
+  "name": "generator-steroid",
+  "version": "0.0.1",
+  "description": "A simple generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Iván Rodríguez",
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.20.3"
+  }
+}
