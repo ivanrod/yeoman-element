@@ -3,7 +3,7 @@
 (function() {
 
     Polymer({
-      is: 'my-<%= elementName %>'
+      is: 'my-<%= componentName %>'
     });
 
 })();

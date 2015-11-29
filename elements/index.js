@@ -1,5 +1,5 @@
 var generators = require('yeoman-generator');
-var cheerio = require('cheerio');
+var utils = require('../utils.js');
 
 module.exports = generators.Base.extend({
 
@@ -11,7 +11,7 @@ module.exports = generators.Base.extend({
       message : 'Your element name',
       default : 'new-element' // Default to current folder name
     }, function (answers) {
-      this.element = {
+      this.component = {
         name: answers.name,
         sourcePath: 'app/elements/',
         path: 'app/elements/' + 'my-' + answers.name + '/my-' + answers.name
@@ -27,37 +27,20 @@ module.exports = generators.Base.extend({
      * Create new files
      */
     newFiles: function () {
-
-      var fileTypes = ['.js', '.html', '.css'];
-
-      for (var fileType in fileTypes) {
-        this.fs.copyTpl(
-          // Template file
-          this.templatePath('my-element' + fileTypes[fileType]),
-          // Destination file
-          this.destinationPath(this.element.path + fileTypes[fileType]),
-          { elementName: this.element.name }
-        );
-      }
-
+      utils.createFiles.call(this, 'my', 'element');
     },
 
     /**
      * Modify existing files
      */
     modifiedFiles: function() {
-      var elementsImports = this.fs.read(this.destinationPath(this.element.sourcePath + '_elements.html'));
-      var elementsImportsCheerio = cheerio.load(elementsImports);
-      var importSelector = elementsImportsCheerio('body');
-      elementsImportsCheerio.root().append('<link rel="import" href="my-' + this.element.name + '.html"></link>\n');
-      console.log(elementsImportsCheerio.html());
-      this.fs.write(this.destinationPath(this.element.sourcePath + '_elements.html'), elementsImportsCheerio.html());
+      utils.addImport.call(this, 'my', 'elements');
     }
 
       /*****************************************************************
         TODO                                                           *
-       -Add to _elements.html                                          *
-       -Prompt to optional <import> addition in pages                  *
+       -Add pages                                                      *
+       -Add layouts                                                    *
        -Prompt to add Composite elements: my-element/my-other-element  *
       *****************************************************************/
   }
