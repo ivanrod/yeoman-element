@@ -7,6 +7,7 @@ var utils = {
   createFiles: function(componentPrefix, componentType) {
     var fileTypes = ['.js', '.html', '.css'];
     var componentTemplateName = componentPrefix + '-' + componentType;
+    var componentName = componentPrefix + '-' + this.component.name;
 
     for (var fileType in fileTypes) {
       this.fs.copyTpl(
@@ -14,20 +15,20 @@ var utils = {
         this.templatePath(componentTemplateName + fileTypes[fileType]),
         // Destination file
         this.destinationPath(this.component.path + fileTypes[fileType]), {
-          componentName: this.component.name
+          componentName: componentName
         }
       );
     }
   },
 
   addImport: function(componentPrefix, componentsType) {
-    var componentImports = this.fs.read(this.destinationPath(this.component.sourcePath + '_elements.html'));
-    var componentImportsCheerio = cheerio.load(componentImports);
-
     var componentFileName = componentPrefix + '-' + this.component.name;
-    var importLink = '<link rel="import" href="' + componentFileName + '.html"></link>\n';
     var componentTemplate = '_' + componentsType;
     var componentPath = this.component.sourcePath + componentTemplate + '.html';
+
+    var componentImports = this.fs.read(this.destinationPath(componentPath));
+    var componentImportsCheerio = cheerio.load(componentImports);
+    var importLink = '<link rel="import" href="' + componentFileName + '/' + componentFileName + '.html"></link>\n';
 
     componentImportsCheerio.root().append(importLink);
 
