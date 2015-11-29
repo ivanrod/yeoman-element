@@ -1,4 +1,9 @@
+'use strict';
 
-Polymer({
-  is: 'my-<%= elementName %>'
-});
+(function() {
+
+    Polymer({
+      is: 'my-<%= elementName %>'
+    });
+
+})();

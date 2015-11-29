@@ -13,7 +13,8 @@ module.exports = generators.Base.extend({
     }, function (answers) {
       this.element = {
         name: answers.name,
-        path: 'elements/my-' + answers.name + '/my-' + answers.name
+        sourcePath: 'app/elements/',
+        path: 'app/elements/' + 'my-' + answers.name + '/my-' + answers.name
       };
       done();
     }.bind(this));
@@ -45,12 +46,12 @@ module.exports = generators.Base.extend({
      * Modify existing files
      */
     modifiedFiles: function() {
-      var elementsImports = this.fs.read(this.destinationPath('elements/_elements.html'));
+      var elementsImports = this.fs.read(this.destinationPath(this.element.sourcePath + '_elements.html'));
       var elementsImportsCheerio = cheerio.load(elementsImports);
-      var importSelector = elementsImportsCheerio('import');
-      importSelector.after('<import src="new-element.html"></import>');
+      var importSelector = elementsImportsCheerio('body');
+      elementsImportsCheerio.root().append('<link rel="import" href="my-' + this.element.name + '.html"></link>\n');
       console.log(elementsImportsCheerio.html());
-      this.fs.write(this.destinationPath('elements/_elements.html'), elementsImportsCheerio.html());
+      this.fs.write(this.destinationPath(this.element.sourcePath + '_elements.html'), elementsImportsCheerio.html());
     }
 
       /*****************************************************************

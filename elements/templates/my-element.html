@@ -1,15 +1,7 @@
 <dom-module id="my-<%= elementName %>">
+  <link rel="import" type="css" href="<%= elementName %>.css">
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-
+    <!-- Your content here  -->
   </template>
-  <script>
-    Polymer({
-      is: 'my-<%= elementName %>'
-    });
-  </script>
+  <script src="<%= elementName %>.js"></script>
 </dom-module>
