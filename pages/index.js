@@ -8,13 +8,13 @@ module.exports = generators.Base.extend({
     this.prompt({
       type    : 'input',
       name    : 'name',
-      message : 'Your layout name',
-      default : 'new-layout' // Default to current folder name
+      message : 'Your page name',
+      default : 'new-page' // Default to current folder name
     }, function (answers) {
       this.component = {
         name: answers.name,
-        sourcePath: 'app/layouts/',
-        path: 'app/layouts/' + 'ly-' + answers.name + '/ly-' + answers.name
+        sourcePath: 'app/pages/',
+        path: 'app/pages/' + 'pg-' + answers.name + '/pg-' + answers.name
       };
       done();
     }.bind(this));
@@ -27,14 +27,14 @@ module.exports = generators.Base.extend({
      * Create new files
      */
     newFiles: function () {
-      utils.createFiles.call(this, 'ly', 'layout');
+      utils.createFiles.call(this, 'pg', 'page');
     },
 
     /**
      * Modify existing files
      */
     modifiedFiles: function() {
-      utils.addImport.call(this, 'ly', 'layouts');
+      utils.addImport.call(this, 'pg', 'pages');
     }
 
       /*****************************************************************

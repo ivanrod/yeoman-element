@@ -39,8 +39,6 @@ module.exports = generators.Base.extend({
 
       /*****************************************************************
         TODO                                                           *
-       -Add pages                                                      *
-       -Add layouts                                                    *
        -Prompt to add Composite elements: my-element/my-other-element  *
       *****************************************************************/
   }
