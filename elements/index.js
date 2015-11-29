@@ -11,34 +11,46 @@ module.exports = generators.Base.extend({
       message : 'Your element name',
       default : 'new-element' // Default to current folder name
     }, function (answers) {
-      this.elementName = answers.name;
+      this.element = {
+        name: answers.name,
+        path: 'elements/my-' + answers.name + '/my-' + answers.name
+      };
       done();
     }.bind(this));
+
+
   },
 
   writing: {
+    /**
+     * Create new files
+     */
     newFiles: function () {
 
       var fileTypes = ['.js', '.html', '.css'];
 
-      // Create new files
       for (var fileType in fileTypes) {
         this.fs.copyTpl(
+          // Template file
           this.templatePath('my-element' + fileTypes[fileType]),
-          this.destinationPath('elements/my-' + this.elementName + '/my-' + this.elementName + fileTypes[fileType]),
-          { elementName: this.elementName }
+          // Destination file
+          this.destinationPath(this.element.path + fileTypes[fileType]),
+          { elementName: this.element.name }
         );
       }
 
     },
 
+    /**
+     * Modify existing files
+     */
     modifiedFiles: function() {
-      // Modify existing files
       var elementsImports = this.fs.read(this.destinationPath('elements/_elements.html'));
       var elementsImportsCheerio = cheerio.load(elementsImports);
       var importSelector = elementsImportsCheerio('import');
       importSelector.after('<import src="new-element.html"></import>');
       console.log(elementsImportsCheerio.html());
+      this.fs.write(this.destinationPath('elements/_elements.html'), elementsImportsCheerio.html());
     }
 
       /*****************************************************************
